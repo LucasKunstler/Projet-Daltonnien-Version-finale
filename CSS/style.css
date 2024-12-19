@@ -212,7 +212,7 @@ strong{
  height: 15vh;
 }
 .btnsuppr{
-    height: 25vh;
+    height: 100%;
     width: 139px;
 }
 /* input[type="color"]:hover{
@@ -484,6 +484,12 @@ input[type="file"]{
     inset -2px -2px 3px rgba(255, 255, 255, 0.6),
     inset 2px 2px 3px rgba(0, 0, 0, 0.6);
 }
+
+.btnActif{
+    color: white;
+    background-color: rgb(36, 36, 36);
+}
+
 .colonneImage{
     margin-left: auto;
     margin-right: auto;

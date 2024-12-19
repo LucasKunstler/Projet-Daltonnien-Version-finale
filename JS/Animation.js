@@ -119,6 +119,12 @@ document.getElementById('btnProtanope').addEventListener('click', () => {
     if (originalImg1 && originalImg2) {
         
         applyFilterToCanvas(imgViews, originalImg2, 'btnProtanope');
+
+        document.getElementById('btnTritanope').classList.remove("btnActif");
+        document.getElementById('btnDeutéranope').classList.remove("btnActif");
+
+        document.getElementById('btnProtanope').classList.add("btnActif");
+        
     }
 });
 
@@ -127,6 +133,12 @@ document.getElementById('btnDeutéranope').addEventListener('click', () => {
     if (originalImg1 && originalImg2) {
         
         applyFilterToCanvas(imgViews, originalImg2, 'btnDeutéranope');
+
+        document.getElementById('btnTritanope').classList.remove("btnActif");
+        document.getElementById('btnProtanope').classList.remove("btnActif");
+
+        document.getElementById('btnDeutéranope').classList.add("btnActif");
+
     }
 });
 
@@ -135,7 +147,12 @@ document.getElementById('btnTritanope').addEventListener('click', () => {
     if (originalImg1 && originalImg2) {
         
         applyFilterToCanvas(imgViews, originalImg2, 'btnTritanope');
-    }
+
+        document.getElementById('btnProtanope').classList.remove("btnActif");
+        document.getElementById('btnDeutéranope').classList.remove("btnActif");
+
+        document.getElementById('btnTritanope').classList.add("btnActif");
+    }      
 });
 
 // Fonction pour marquer un bouton comme actif (et donc le filtre associé comme actif)
@@ -210,7 +227,7 @@ function RangeValue() {
     // ////////////////////// Pour obtenir la taille en pixel à partir de la taille en pourcentage ///////////////////////////
 
     // Supposons que vous avez un pourcentage et une largeur d'élément parent
-    let pourcentage = 100;  // 50% par exemple
+    let pourcentage = (value - range.min) / (range.max - range.min) * 100;  // 50% par exemple
     let parentElement = document.querySelector('.range-container');  // Parent de l'élément
 
     // Obtenir la largeur de l'élément parent
@@ -218,8 +235,6 @@ function RangeValue() {
 
     // Calculer la largeur en pixels
     let widthInPixels = (pourcentage / 100) * parentWidth;
-
-    // console.log(widthInPixels);  
     // Affiche la largeur en pixels
 
     // //////////////////////////////// Et le Réutiliser dans la condition "if" //////////////////////////////////////////////
@@ -228,16 +243,13 @@ function RangeValue() {
     // Positionner la valeur au-dessus du curseur
     if(valuePosition == widthInPixels){
         rangeValue.style.left = `calc(${valuePosition}px - 1%)`;
-        // console.log(valuePosition);
     }
     else if (valuePosition == 0) {
         rangeValue.style.left = `calc(${valuePosition}px + 1%)`;
-        // console.log(valuePosition);
     }
     else {
         // rangeValue.style.left = valuePosition;
         rangeValue.style.left = `calc(${valuePosition}px)`;
-        // console.log(valuePosition);
     }
     // +1rem pour éviter qu'il ne touche la barre
 }
@@ -248,6 +260,9 @@ function RangeValue() {
 // Mettre à jour la valeur lorsque le curseur se déplace
 range.addEventListener('input', RangeValue);
 
+window.addEventListener('resize', function() {
+    RangeValue();
+});
 
 /////////////////////////// Fin Range  ///////////////////////////
 
@@ -284,7 +299,7 @@ function RangeValueImg() {
     // //////////////////////////////////////////////////////////////////////////////
 
     // Supposons que vous avez un pourcentage et une largeur d'élément parent
-    let pourcentage = 100;  // 50% par exemple
+    let pourcentage = (valueImg - range.min) / (range.max - range.min) * 100;  // 50% par exemple
     let parentElement = document.querySelector('.range-containerImg');  // Parent de l'élément
     // Obtenir la largeur de l'élément parent
     let parentWidth = parentElement.offsetWidth;
@@ -298,7 +313,7 @@ function RangeValueImg() {
     // //////////////////////////////////////////////////////////////////////////////
 
     // Positionner la valeur au-dessus du curseur
-    if(Math.abs(valuePositionImg - widthInPixels) < 1){
+    if(valuePositionImg == widthInPixels){
         rangeValueImg.style.left = `calc(${valuePositionImg}px - 1%)`;
         // console.log('Condition 1:', valuePositionImg);
     }
@@ -318,6 +333,10 @@ RangeValueImg();
 
 // Mettre à jour la valeur lorsque le curseur se déplace
 rangeImg.addEventListener('input', RangeValueImg);
+
+window.addEventListener('resize', function() {
+    RangeValue();
+});
 
 
 // //////////////////////////////////////////////////////////////////////////////////
